@@ -21,6 +21,12 @@
     </properties>
 
     <dependencies>
+        <!--Logging (logback core, classic, slf4j API)-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.11</version>
+        </dependency>
         <!--  Servlet API  -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -37,15 +43,9 @@
         </dependency>
         <!--JSTL Integration with TomCat 9 and less-->
         <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>jstl-api</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <!--Logging (logback core, classic, slf4j API)-->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.4.5</version>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>1.2.6</version>
         </dependency>
         <!-- JDBC Driver -->
         <dependency>
@@ -75,6 +75,43 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <!-- clean -->
+                    <execution>
+                        <id>clean-lib</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <target>
+                                <delete dir="${basedir}/src/main/webapp/WEB-INF/lib"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <!-- build -->
+                    <execution>
+                        <id>copy-lib</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <target>
+                                <delete dir="${basedir}/src/main/webapp/WEB-INF/lib"/>
+                                <copy todir="${basedir}/src/main/webapp/WEB-INF/lib">
+                                    <fileset dir="${basedir}/target/${project.build.finalName}/WEB-INF/lib"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
 

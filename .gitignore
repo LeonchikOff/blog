@@ -1,0 +1,9 @@
+# Default ignored files
+.gitignore
+/target/
+/out/
+.idea/
+.DS-Store
+*.iml
+.git
+/external

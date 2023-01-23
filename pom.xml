@@ -47,12 +47,6 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-        <!--Library extending of java.lang -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
-        </dependency>
         <!-- Pool DB Connection -->
         <dependency>
             <groupId>org.apache.commons</groupId>

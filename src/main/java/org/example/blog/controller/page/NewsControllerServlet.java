@@ -17,6 +17,6 @@ public class NewsControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("dynamicPage", "pages/news.jsp");
-        req.getRequestDispatcher("WEB-INF/jsp/page_template.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/template.jsp").forward(req, resp);
     }
 }

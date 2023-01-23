@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet({"/news", "/news/*"})
+@WebServlet(urlPatterns = {"/news","/news/*"})
 public class NewsControllerServlet extends HttpServlet {
     public static final Logger LOGGER = LoggerFactory.getLogger(ArticleControllerServlet.class);
 
@@ -30,6 +30,6 @@ public class NewsControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("dynamicPage", "pages/news.jsp");
-        req.getRequestDispatcher("WEB-INF/jsp/template.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/template.jsp").forward(req, resp);
     }
 }

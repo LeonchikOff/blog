@@ -23,7 +23,7 @@ public class ServiceManager {
         this.loadProperties(applicationProperties);
 
         dataSource = createBasicDataSource();
-        businessService = new BusinessServiceImpl();
+        businessService = new BusinessServiceImpl(this);
     }
 
     public BasicDataSource getDataSource() {

@@ -5,40 +5,14 @@
     <tr>
         <th style="width:270px;">Categories</th>
     </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Elementum<span>(1)</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Proin<span>(2)</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Eleifend<span>(18)</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Phasellus<span>(24)</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Consectetuer<span>(33)</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Ultricies<span>(2)</span></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<c:url value="/news"/>">Mollis<span>(1)</span></a>
-        </td>
-    </tr>
+    <c:forEach items="${applicationScope.CATEGORY_MAP}" var="categoryEntry">
+        <c:set var="categoryValue" value="${categoryEntry.value}"/>
+        <tr>
+            <td class="item">
+                <a href="/news${categoryValue.url}">
+                        ${categoryValue.name}<span>(${categoryValue.count_of_articles})</span></a>
+            </td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>

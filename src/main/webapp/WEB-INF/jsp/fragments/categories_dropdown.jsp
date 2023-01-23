@@ -4,27 +4,12 @@
     <li>
         <a href="javascript:void(0);">Categories</a>
         <ul class="menu" style="display:none;">
-            <li>
-                <a href="<c:url value="/news"/>">Elementum<span>(1)</span></a>
-            </li>
-            <li>
-                <a href="<c:url value="/news"/>">Proin<span>(2)</span></a>
-            </li>
-            <li>
-                <a href="<c:url value="/news"/>">Eleifend<span>(18)</span></a>
-            </li>
-            <li>
-                <a href="<c:url value="/news"/>">Phasellus<span>(24)</span></a>
-            </li>
-            <li>
-                <a href="<c:url value="/news"/>">Consectetuer<span>(33)</span></a>
-            </li>
-            <li>
-                <a href="<c:url value="/news"/>">Ultricies<span>(2)</span></a>
-            </li>
-            <li>
-                <a href="<c:url value="/news"/>">Mollis<span>(1)</span></a>
-            </li>
+            <c:forEach items="${applicationScope.CATEGORY_MAP}" var="categoryEntry">
+                <c:set value="${categoryEntry.value}" var="categoryValue"/>
+                <li class="item">
+                    <a href="/news${categoryValue.url}">${categoryValue.name} <span>(${categoryValue.count_of_articles})</span></a>
+                </li>
+            </c:forEach>
         </ul>
     </li>
 </ul>

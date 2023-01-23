@@ -3,7 +3,7 @@ package org.example.blog.entity;
 public class Category extends AbstractEntity<Integer> {
     private String name;
     private String url;
-    private int countOfArticles;
+    private int count_of_articles;
 
     public String getName() {
         return name;
@@ -21,11 +21,11 @@ public class Category extends AbstractEntity<Integer> {
         this.url = url;
     }
 
-    public int getCountOfArticles() {
-        return countOfArticles;
+    public int getCount_of_articles() {
+        return count_of_articles;
     }
 
-    public void setCountOfArticles(int countOfArticles) {
-        this.countOfArticles = countOfArticles;
+    public void setCount_of_articles(int count_of_articles) {
+        this.count_of_articles = count_of_articles;
     }
 }

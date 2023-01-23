@@ -9,10 +9,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/app.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/foundation.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/foundation-icons.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/app.css"/>">
 </head>
 <body>
 <header>
@@ -39,9 +38,9 @@
 <footer class="footer">
     <jsp:include page="fragments/footer.jsp"/>
 </footer>
-<script src="<c:url value="/static/js/app.js"/>"></script>
-<script src="<c:url value="/static/js/foundation.js"/>"></script>
 <script src="<c:url value="/static/js/jquery.js"/>"></script>
 <script src="<c:url value="/static/js/what-input.js"/>"></script>
+<script src="<c:url value="/static/js/foundation.js"/>"></script>
+<script src="<c:url value="/static/js/app.js"/>"></script>
 </body>
 </html>

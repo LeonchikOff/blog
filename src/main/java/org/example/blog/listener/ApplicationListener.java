@@ -1,5 +1,6 @@
 package org.example.blog.listener;
 
+import org.example.blog.service.impl.ServiceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,11 +14,15 @@ public class ApplicationListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        LOGGER.info("Application started");
+        LOGGER.info("Application context initialized");
+        ServiceManager.getInstance(sce.getServletContext());
+
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        LOGGER.info("Application destroyed");
+        ServiceManager.getInstance(sce.getServletContext()).destroy();
+        LOGGER.info("Application  context destroyed");
+
     }
 }

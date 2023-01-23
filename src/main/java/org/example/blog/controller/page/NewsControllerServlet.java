@@ -1,5 +1,7 @@
 package org.example.blog.controller.page;
 
+import org.example.blog.service.BusinessService;
+import org.example.blog.service.impl.ServiceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,17 @@ import java.io.IOException;
 @WebServlet({"/news", "/news/*"})
 public class NewsControllerServlet extends HttpServlet {
     public static final Logger LOGGER = LoggerFactory.getLogger(ArticleControllerServlet.class);
+
+    private BusinessService businessService;
+
+    @Override
+    public void init() throws ServletException {
+        businessService = ServiceManager.getInstance(this.getServletContext()).getBusinessService();
+    }
+
+    public BusinessService getBusinessService() {
+        return businessService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

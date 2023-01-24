@@ -10,7 +10,7 @@
         <tr>
             <td class="item">
                 <a href="/news${categoryValue.url}">
-                        ${categoryValue.name}<span>(${categoryValue.count_of_articles})</span></a>
+                        ${categoryValue.name}<span>(${categoryValue.countOfArticles})</span></a>
             </td>
         </tr>
     </c:forEach>

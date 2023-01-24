@@ -17,6 +17,7 @@ public class CategoryMapper implements ResultSetHandler<Map<Integer, Category>> 
         Map<Integer, Category> categoryMap = new HashMap<>();
         while (resultSet.next()) {
             Category category = rowProcessor.toBean(resultSet, Category.class);
+            category.setCountOfArticles(resultSet.getInt("count_of_articles"));
             categoryMap.put(category.getId(), category);
         }
         return categoryMap;

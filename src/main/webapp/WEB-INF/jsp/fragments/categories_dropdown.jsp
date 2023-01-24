@@ -7,7 +7,7 @@
             <c:forEach items="${applicationScope.CATEGORY_MAP}" var="categoryEntry">
                 <c:set value="${categoryEntry.value}" var="categoryValue"/>
                 <li class="item">
-                    <a href="/news${categoryValue.url}">${categoryValue.name} <span>(${categoryValue.count_of_articles})</span></a>
+                    <a href="/news${categoryValue.url}">${categoryValue.name} <span>(${categoryValue.countOfArticles})</span></a>
                 </li>
             </c:forEach>
         </ul>

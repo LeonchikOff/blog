@@ -22,22 +22,20 @@ public class NewsControllerServlet extends HttpServlet {
     private BusinessService businessService;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         businessService = ServiceManager.getInstance(this.getServletContext()).getBusinessService();
-    }
-
-    public BusinessService getBusinessService() {
-        return businessService;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURI = req.getRequestURI();
-        Model<Article> articleModel = null;
+        Model<Article> articleModel;
         if (requestURI.endsWith("/news") || requestURI.endsWith("/news/")) {
             articleModel = businessService.listArticles(0, Constants.LIMIT_ARTICLES_PER_PAGE);
         } else {
-            //TODO display articles by categories
+            String categoryURI = requestURI.replace("/news", "");
+            articleModel = businessService.listArticlesByCategory(categoryURI, 0, Constants.LIMIT_ARTICLES_PER_PAGE);
+            req.setAttribute("categoryByUrlId", businessService.findCategoryByUrl(categoryURI).getId());
         }
         req.setAttribute("articlesList", articleModel.getCurrentDataList());
         req.setAttribute("dynamicPage", "pages/news.jsp");

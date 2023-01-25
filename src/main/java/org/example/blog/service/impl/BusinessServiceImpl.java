@@ -41,4 +41,25 @@ class BusinessServiceImpl implements BusinessService {
             throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
         }
     }
+
+    @Override
+    public Model<Article> listArticlesByCategory(String categoryUrl, int offset, int limit) {
+        try(Connection connection = dataSource.getConnection()){
+            Model<Article> articleModel = new Model<>();
+            articleModel.setCurrentDataList(sqlDao.listArticlesByCategory(connection, categoryUrl, offset, limit));
+            articleModel.setTotalAmountOfData(sqlDao.countArticlesByCategory(connection, categoryUrl));
+            return articleModel;
+        } catch (SQLException sqlException) {
+            throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
+        }
+    }
+
+    @Override
+    public Category findCategoryByUrl(String categoryUrl) {
+        try(Connection connection = dataSource.getConnection()) {
+            return sqlDao.findCategoryByUrl(connection, categoryUrl);
+        } catch (SQLException sqlException) {
+            throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
+        }
+    }
 }

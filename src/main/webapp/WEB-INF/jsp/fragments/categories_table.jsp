@@ -8,9 +8,10 @@
     <c:forEach items="${applicationScope.CATEGORY_MAP}" var="categoryEntry">
         <c:set var="categoryValue" value="${categoryEntry.value}"/>
         <tr>
-            <td class="item">
-                <a href="/news${categoryValue.url}">
-                        ${categoryValue.name}<span>(${categoryValue.countOfArticles})</span></a>
+            <td class="${requestScope.categoryByUrlId == categoryEntry.key ? ' selected ' : ''} item">
+                <a href="/news${categoryValue.url}">${categoryValue.name}
+                    <span>(${categoryValue.countOfArticles})</span>
+                </a>
             </td>
         </tr>
     </c:forEach>

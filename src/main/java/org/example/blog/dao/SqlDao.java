@@ -1,7 +1,7 @@
 package org.example.blog.dao;
 
-import org.apache.commons.dbutils.*;
-import org.apache.commons.dbutils.handlers.ArrayHandler;
+import org.apache.commons.dbutils.BasicRowProcessor;
+import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.example.blog.dao.mapper.ArticleMapper;
@@ -51,6 +51,20 @@ public final class SqlDao {
                 .intValue();
     }
 
+    public List<Article> listArticlesBySearchQuery(Connection connection, String searchQuery, int offset, int limit) throws SQLException {
+        String queryParam = "%" + searchQuery + "%";
+        return queryRunner.query(connection,
+                "SELECT * FROM article art WHERE (art.title ILIKE ? OR art.content ILIKE ?) ORDER BY art.id DESC OFFSET ? LIMIT ? ",
+                new ListMapper<>(new ArticleMapper()), queryParam, queryParam, offset, limit);
+    }
+
+    public Integer countArticlesBySearchQuery(Connection connection, String searchQuery) throws SQLException {
+        String queryParam = "%" + searchQuery + "%";
+        return queryRunner.query(connection,
+                "SELECT count(art.id) FROM article art WHERE (art.title ILIKE ? OR art.content ILIKE ?)",
+                new ScalarHandler<Number>(), queryParam, queryParam).intValue();
+    }
+
     public Category findCategoryByUrl(Connection connection, String categoryUrl) throws SQLException {
         return queryRunner.query(connection,
                 "SELECT * FROM category ctr WHERE ctr.url= ? ",
@@ -67,4 +81,5 @@ public final class SqlDao {
                 },
                 categoryUrl);
     }
+
 }

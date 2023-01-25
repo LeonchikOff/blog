@@ -32,7 +32,7 @@ class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Model<Article> listArticles(int offset, int limit) {
-        try(Connection connection = dataSource.getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             Model<Article> articleModel = new Model<>();
             articleModel.setCurrentDataList(sqlDao.listArticles(connection, offset, limit));
             articleModel.setTotalAmountOfData(sqlDao.countArticles(connection));
@@ -44,7 +44,7 @@ class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Model<Article> listArticlesByCategory(String categoryUrl, int offset, int limit) {
-        try(Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             Model<Article> articleModel = new Model<>();
             articleModel.setCurrentDataList(sqlDao.listArticlesByCategory(connection, categoryUrl, offset, limit));
             articleModel.setTotalAmountOfData(sqlDao.countArticlesByCategory(connection, categoryUrl));
@@ -55,8 +55,20 @@ class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    public Model<Article> listArticlesBySearchQuery(String searchQuery, int offset, int limit) {
+        try (Connection connection = dataSource.getConnection()) {
+            Model<Article> articleModel = new Model<>();
+            articleModel.setCurrentDataList(sqlDao.listArticlesBySearchQuery(connection, searchQuery, offset, limit));
+            articleModel.setTotalAmountOfData(sqlDao.countArticlesBySearchQuery(connection, searchQuery));
+            return articleModel;
+        } catch (SQLException sqlException) {
+            throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
+        }
+    }
+
+    @Override
     public Category findCategoryByUrl(String categoryUrl) {
-        try(Connection connection = dataSource.getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             return sqlDao.findCategoryByUrl(connection, categoryUrl);
         } catch (SQLException sqlException) {
             throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);

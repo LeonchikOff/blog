@@ -9,7 +9,7 @@
             <form action="<c:url value="/search"/>" method="get">
                 <div class="input-group" style="margin-top: 1em;">
                     <label for="search">
-                        <input id="search" class="input-group-field" name="query" placeholder="Search query" type="text">
+                        <input id="search" class="input-group-field" name="query" placeholder="Search query" value="${requestScope.searchQuery}" type="text">
                     </label>
                     <div class="input-group-button">
                         <input class="button" value="Find" type="submit">

@@ -1,12 +1,10 @@
 package org.example.blog.entity;
 
-import org.example.blog.model.AbstractModel;
-
 import java.io.Serializable;
 import java.util.Objects;
 
 public abstract class AbstractEntity<CertainTypeOfObligatoryFieldIdWithinThisClass>
-        extends AbstractModel implements Serializable {
+        implements Serializable {
 
     private CertainTypeOfObligatoryFieldIdWithinThisClass id;
 

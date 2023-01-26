@@ -2,6 +2,7 @@ package org.example.blog.service;
 
 import org.example.blog.entity.Article;
 import org.example.blog.entity.Category;
+import org.example.blog.exception.RedirectToValidUrlException;
 import org.example.blog.model.Model;
 
 import java.util.Map;
@@ -12,5 +13,6 @@ public interface BusinessService {
     Model<Article> listArticlesByCategory(String categoryUrl, int offset, int limit);
     Model<Article> listArticlesBySearchQuery(String searchQuery, int offset, int limit);
     Category findCategoryByUrl(String categoryUrl);
+    Article viewArticle(Long idArticle, String requestURL) throws RedirectToValidUrlException;
 
 }

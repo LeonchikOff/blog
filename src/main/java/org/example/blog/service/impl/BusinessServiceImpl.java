@@ -3,6 +3,7 @@ package org.example.blog.service.impl;
 import org.example.blog.dao.SqlDao;
 import org.example.blog.entity.Article;
 import org.example.blog.entity.Category;
+import org.example.blog.exception.RedirectToValidUrlException;
 import org.example.blog.exception.UncheckedSystemException;
 import org.example.blog.model.Model;
 import org.example.blog.service.BusinessService;
@@ -70,6 +71,26 @@ class BusinessServiceImpl implements BusinessService {
     public Category findCategoryByUrl(String categoryUrl) {
         try (Connection connection = dataSource.getConnection()) {
             return sqlDao.findCategoryByUrl(connection, categoryUrl);
+        } catch (SQLException sqlException) {
+            throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
+        }
+    }
+
+    @Override
+    public Article viewArticle(Long idArticle, String requestURL) throws RedirectToValidUrlException {
+        try (Connection connection = dataSource.getConnection()) {
+            Article articleById = sqlDao.findArticleById(connection, idArticle);
+            if(articleById == null) {
+                return null;
+            }
+            if (requestURL.equals(articleById.getIncreasedUrlArticle())) {
+                articleById.setCountOfViews(articleById.getCountOfViews() + 1);
+                sqlDao.updateArticleCountOfViews(connection, articleById);
+                connection.commit();
+                return articleById;
+            } else {
+                throw new RedirectToValidUrlException(articleById.getIncreasedUrlArticle());
+            }
         } catch (SQLException sqlException) {
             throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
         }

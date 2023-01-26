@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.example.blog.Constants;
 import org.example.blog.entity.Article;
 import org.example.blog.model.Model;
+import org.example.blog.model.Pagination;
 import org.example.blog.service.BusinessService;
 import org.example.blog.service.impl.ServiceManager;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet("/search")
 public class SearchControllerServlet extends HttpServlet {
@@ -29,12 +31,21 @@ public class SearchControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int offset = 0;
+        String pageParam = req.getParameter("page");
+        if(pageParam != null) {
+            int page = Integer.parseInt(pageParam);
+            offset = (page - 1) * Constants.LIMIT_ARTICLES_PER_PAGE;
+        }
         String searchQuery = req.getParameter("query");
         if(StringUtils.isNotBlank(searchQuery)) {
-            Model<Article> articleModel = businessService.listArticlesBySearchQuery(searchQuery, 0, Constants.LIMIT_ARTICLES_PER_PAGE);
+            Model<Article> articleModel = businessService.listArticlesBySearchQuery(searchQuery, offset, Constants.LIMIT_ARTICLES_PER_PAGE);
             req.setAttribute("articlesList", articleModel.getCurrentDataList());
             req.setAttribute("allCountOfArticlesBySearchQuery", articleModel.getTotalAmountOfData());
             req.setAttribute("searchQuery", searchQuery);
+            Pagination pagination = new Pagination.Builder("/search?query=" + URLEncoder.encode(searchQuery, "UTF-8") + "&", offset, articleModel.getTotalAmountOfData())
+                    .builderWithCustomLimit(Constants.LIMIT_ARTICLES_PER_PAGE).build();
+            req.setAttribute("pagination", pagination);
             req.setAttribute("dynamicPage", "pages/search.jsp");
             req.getRequestDispatcher("/WEB-INF/jsp/template.jsp").forward(req, resp);
         } else {

@@ -23,6 +23,32 @@ public final class SqlDao {
         return queryRunner.query(connection, "SELECT * FROM category", new CategoryMapper());
     }
 
+    public Article findArticleById(Connection connection, long idArticle) throws SQLException {
+        return queryRunner.query(connection,
+                "SELECT * FROM article art WHERE art.id = ?",
+                new BeanHandler<Article>(Article.class) {
+                    @Override
+                    public Article handle(ResultSet rs) throws SQLException {
+                        Article article = null;
+                        if (rs.next()) {
+                            article = new BasicRowProcessor().toBean(rs, Article.class);
+                            article.setDateOfCreated(rs.getTimestamp("date_of_created"));
+                            article.setCountOfViews(rs.getLong("count_of_views"));
+                            article.setCountOfComments(rs.getInt("count_of_comments"));
+                            article.setUrlArticle(rs.getString("url_article"));
+                            article.setUrlLogo(rs.getString("url_logo"));
+                            article.setIdCategory(rs.getInt("id_category"));
+                        }
+                        return article;
+                    }
+                },
+                idArticle);
+    }
+
+    public void updateArticleCountOfViews(Connection connection, Article article) throws SQLException {
+        queryRunner.update(connection, "UPDATE article SET count_of_views = ? WHERE id = ?", article.getCountOfViews(), article.getId());
+    }
+
     public List<Article> listArticles(Connection connection, int offset, int limit) throws SQLException {
         return queryRunner.query(connection,
                 "SELECT * FROM article art ORDER BY art.id DESC OFFSET ? LIMIT ?",

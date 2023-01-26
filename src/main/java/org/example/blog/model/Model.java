@@ -1,8 +1,11 @@
 package org.example.blog.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.util.List;
 
-public class Model<DataTypeOfListInTheModel> extends AbstractModel {
+public class Model<DataTypeOfListInTheModel> {
     private List<DataTypeOfListInTheModel> currentDataList;
     private Integer totalAmountOfData;
 
@@ -20,5 +23,10 @@ public class Model<DataTypeOfListInTheModel> extends AbstractModel {
 
     public void setTotalAmountOfData(Integer totalAmountOfData) {
         this.totalAmountOfData = totalAmountOfData;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
     }
 }

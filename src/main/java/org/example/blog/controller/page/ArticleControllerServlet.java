@@ -28,11 +28,11 @@ public class ArticleControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
         String requestURI = req.getRequestURI();
-        long idArticle = Long.parseLong(StringUtils.split(requestURI, "/")[1]);
+        try {
+            long idArticle = Long.parseLong(StringUtils.split(requestURI, "/")[1]);
             Article article = businessService.viewArticle(idArticle, requestURI);
-            if(article == null) {
+            if (article == null) {
                 resp.sendRedirect("/404?url=" + requestURI);
             } else {
                 req.setAttribute("article", article);
@@ -42,7 +42,7 @@ public class ArticleControllerServlet extends HttpServlet {
         } catch (RedirectToValidUrlException e) {
             resp.sendRedirect(e.getUrl());
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException runtimeException) {
-            resp.sendRedirect("/news");
+            resp.sendRedirect("/404?url=" + requestURI);
         }
     }
 }

@@ -2,6 +2,7 @@ package org.example.blog.controller.page;
 
 import org.example.blog.Constants;
 import org.example.blog.entity.Article;
+import org.example.blog.entity.Category;
 import org.example.blog.model.Model;
 import org.example.blog.model.Pagination;
 import org.example.blog.service.BusinessService;
@@ -39,10 +40,17 @@ public class NewsControllerServlet extends HttpServlet {
         Model<Article> articleModel;
         if (requestURI.endsWith("/news") || requestURI.endsWith("/news/")) {
             articleModel = businessService.listArticles(offset, Constants.LIMIT_ARTICLES_PER_PAGE);
+            req.setAttribute("isNewsPage", Boolean.TRUE);
         } else {
             String categoryURI = requestURI.replace("/news", "");
-            articleModel = businessService.listArticlesByCategory(categoryURI, offset, Constants.LIMIT_ARTICLES_PER_PAGE);
-            req.setAttribute("categoryByUrlId", businessService.findCategoryByUrl(categoryURI).getId());
+            Category categoryByUrl = businessService.findCategoryByUrl(categoryURI);
+            if(categoryByUrl == null) {
+                resp.sendRedirect("/404?url=" + requestURI);
+                return;
+            } else {
+                articleModel = businessService.listArticlesByCategory(categoryURI, offset, Constants.LIMIT_ARTICLES_PER_PAGE);
+                req.setAttribute("selectedCategory", categoryByUrl);
+            }
         }
         req.setAttribute("articlesList", articleModel.getCurrentDataList());
         Pagination pagination = new Pagination.Builder(requestURI + "?", offset, articleModel.getTotalAmountOfData())

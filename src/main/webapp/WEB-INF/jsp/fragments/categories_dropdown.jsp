@@ -6,7 +6,7 @@
         <ul class="menu" style="display:none;">
             <c:forEach items="${applicationScope.CATEGORY_MAP}" var="categoryEntry">
                 <c:set value="${categoryEntry.value}" var="categoryValue"/>
-                <li class="${requestScope.categoryByUrlId == categoryEntry.key ? 'selected' : ''} item">
+                <li class="${requestScope.selectedCategory.id == categoryEntry.key ? 'selected' : ''} item">
                     <a href="/news${categoryValue.url}">${categoryValue.name}
                         <span>(${categoryValue.countOfArticles})</span>
                     </a>

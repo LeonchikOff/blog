@@ -12,6 +12,7 @@ public interface BusinessService {
     Model<Article> listArticles(int offset, int limit);
     Model<Article> listArticlesByCategory(String categoryUrl, int offset, int limit);
     Model<Article> listArticlesBySearchQuery(String searchQuery, int offset, int limit);
+
     Category findCategoryByUrl(String categoryUrl);
     Article viewArticle(Long idArticle, String requestURL) throws RedirectToValidUrlException;
 

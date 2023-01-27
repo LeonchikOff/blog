@@ -1,7 +1,9 @@
 package org.example.blog.controller.page;
 
 import org.apache.commons.lang3.StringUtils;
+import org.example.blog.Constants;
 import org.example.blog.entity.Article;
+import org.example.blog.entity.Comment;
 import org.example.blog.exception.RedirectToValidUrlException;
 import org.example.blog.service.BusinessService;
 import org.example.blog.service.impl.ServiceManager;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/article/*")
 public class ArticleControllerServlet extends HttpServlet {
@@ -36,6 +39,8 @@ public class ArticleControllerServlet extends HttpServlet {
                 resp.sendRedirect("/404?url=" + requestURI);
             } else {
                 req.setAttribute("article", article);
+                List<Comment> comments = businessService.listComments(article.getId(), 0, Constants.LIMIT_COMMENTS_PER_PAGE);
+                req.setAttribute("comments", comments);
                 req.setAttribute("dynamicPage", "pages/article.jsp");
                 req.getRequestDispatcher("/WEB-INF/jsp/template.jsp").forward(req, resp);
             }

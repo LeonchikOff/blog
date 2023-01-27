@@ -3,6 +3,7 @@ package org.example.blog.service.impl;
 import org.example.blog.dao.SqlDao;
 import org.example.blog.entity.Article;
 import org.example.blog.entity.Category;
+import org.example.blog.entity.Comment;
 import org.example.blog.exception.RedirectToValidUrlException;
 import org.example.blog.exception.UncheckedSystemException;
 import org.example.blog.model.Model;
@@ -11,6 +12,7 @@ import org.example.blog.service.BusinessService;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 class BusinessServiceImpl implements BusinessService {
@@ -91,6 +93,15 @@ class BusinessServiceImpl implements BusinessService {
             } else {
                 throw new RedirectToValidUrlException(articleById.getIncreasedUrlArticle());
             }
+        } catch (SQLException sqlException) {
+            throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
+        }
+    }
+
+    @Override
+    public List<Comment> listComments(Long idArticle, int offset, int limit) {
+        try(Connection connection = dataSource.getConnection()) {
+            return sqlDao.listComments(connection, idArticle, offset, limit);
         } catch (SQLException sqlException) {
             throw new UncheckedSystemException("Can't execute db command: " + sqlException.getMessage(), sqlException);
         }

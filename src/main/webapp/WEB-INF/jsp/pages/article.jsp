@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true" pageEncoding="UTF-8" %>
 
 <div class="article thumbnail">
@@ -38,8 +39,10 @@
             <div id="comments-list-container">
                 <jsp:include page="../fragments/comments.jsp"/>
             </div>
+
             <div id="comments-load-more-ctrl" class="row column text-center">
-                <a href="#" class="button hollow expanded load-more-btn">Load More</a>
+                <a class="button hollow expanded load-more-btn"
+                ${requestScope.article.countOfComments > fn:length(requestScope.comments) ? '' : 'style="display:none"'}>Load More</a>
             </div>
         </div>
     </div>

@@ -2,9 +2,11 @@ package org.example.blog.service;
 
 import org.example.blog.entity.Article;
 import org.example.blog.entity.Category;
+import org.example.blog.entity.Comment;
 import org.example.blog.exception.RedirectToValidUrlException;
 import org.example.blog.model.Model;
 
+import java.util.List;
 import java.util.Map;
 
 public interface BusinessService {
@@ -15,5 +17,7 @@ public interface BusinessService {
 
     Category findCategoryByUrl(String categoryUrl);
     Article viewArticle(Long idArticle, String requestURL) throws RedirectToValidUrlException;
+
+    List<Comment> listComments(Long idArticle, int offset, int limit);
 
 }

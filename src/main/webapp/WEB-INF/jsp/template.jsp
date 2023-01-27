@@ -41,6 +41,7 @@
 <script src="<c:url value="/static/js/jquery.js"/>"></script>
 <script src="<c:url value="/static/js/what-input.js"/>"></script>
 <script src="<c:url value="/static/js/foundation.js"/>"></script>
+<script src="<c:url value="/static/js/messages.jsp"/>"></script>
 <script src="<c:url value="/static/js/app.js"/>"></script>
 </body>
 </html>

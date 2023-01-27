@@ -13,10 +13,8 @@ import java.io.IOException;
 public class ErrorHandlerFilter implements Filter {
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandlerFilter.class);
 
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override

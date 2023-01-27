@@ -36,13 +36,15 @@
         <%----------------------------Comments section---------------------%>
         <div class="comments">
             <jsp:include page="../fragments/new_comment.jsp"/>
-            <div id="comments-list-container">
+            <div id="comments-list-container"
+                 data-comments-count="${requestScope.article.countOfComments}"
+                 data-id-article="${requestScope.article.id}">
                 <jsp:include page="../fragments/comments.jsp"/>
             </div>
-
             <div id="comments-load-more-ctrl" class="row column text-center">
-                <a class="button hollow expanded load-more-btn"
+                <a href="javascript:moreComments();" class="button hollow expanded load-more-btn"
                 ${requestScope.article.countOfComments > fn:length(requestScope.comments) ? '' : 'style="display:none"'}>Load More</a>
+                <img src="<c:url value="/static/img/loading.gif"/>" alt="Loading..." class="loading-indicator">
             </div>
         </div>
     </div>
